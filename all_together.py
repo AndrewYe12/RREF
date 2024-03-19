@@ -1,4 +1,4 @@
-class matrix: # this code is slightly broken, the rref and inverse files arent but i havent updated this yet 
+class matrix: 
     def __init__(self, matrix):
         self.matrix = matrix
 
@@ -12,7 +12,12 @@ class matrix: # this code is slightly broken, the rref and inverse files arent b
             inverse.append([0]*rows)
             inverse[row][counting] = 1
             counting += 1
-        for i in range(min(rows, columns)):
+        if rows < columns:
+            numbersyay = min(rows, columns)
+        else:
+            numbersyay = max(rows,columns)
+            
+        for i in range(numbersyay):
             count = 0
             for nonzero in range(columns):
                 pivot = self.matrix[i][nonzero]
@@ -37,11 +42,16 @@ class matrix: # this code is slightly broken, the rref and inverse files arent b
                     anotherTemp.append(-list1*k + list2)
                 inverse[rest] = anotherTemp
         return inverse
+    
     def rref(self):
         rows = len(self.matrix)
         columns = len(self.matrix[0])
         rref_form = self.matrix
-        for i in range(min(rows, columns)):
+        if rows < columns:
+            numbersyay = min(rows, columns)
+        else:
+            numbersyay = max(rows,columns)
+        for i in range(numbersyay): 
             count = 0
             for nonzero in range(columns):
                 pivot = self.matrix[i][nonzero]
@@ -61,5 +71,38 @@ class matrix: # this code is slightly broken, the rref and inverse files arent b
                 rref_form[rest] = temp
         return rref_form
 
-x = matrix([[2,2,3,3],[2,2,3,3],[3,3,4,5],[3,56,2,2],[45,56,5,2]])
-print(x.rref())
+    def __mul__(self, other):
+        finalmatrix = []
+        for i in range(len(self.matrix)):
+            tempy = []
+            for x in range(len(self.matrix[0])):
+                temp = [self.matrix[i][x]*other.matrix[x][y] for y in range(len(other.matrix[0]))]
+                if not tempy:
+                    tempy.append(temp)
+                else:
+                    yay = []
+                    for list1, list2 in zip(tempy[0], temp):
+                        hello = list1 + list2
+                        yay.append(hello)
+                    tempy[0] = yay
+            finalmatrix.append(tempy)
+        return finalmatrix
+
+    def __add__(self, other):
+        finalmatrix = []
+        for list1, list2 in zip(self.matrix, other.matrix):
+            temp = []
+            for listy1, listy2 in zip(list1, list2):
+                temp.append(listy1 + listy2)
+            finalmatrix.append(temp)
+        return finalmatrix
+
+
+
+x = matrix([[2,3],[8,9],[1,1]])
+y = matrix([[4,5,7],[2,1,0]])
+print(y*x)
+
+t = matrix([[22,34],[43,22]])
+m = matrix([[34,22],[23,55]])
+print(t+m)
