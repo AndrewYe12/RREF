@@ -8,7 +8,12 @@ def inverse(matrix):
         inverse.append([0]*rows)
         inverse[row][counting] = 1
         counting += 1
-    for i in range(min(rows, columns)):
+    if rows < columns:
+        numbersyay = min(rows, columns)
+    else:
+        numbersyay = max(rows,columns)
+        
+    for i in range(numbersyay):
         count = 0
         for nonzero in range(columns):
             pivot = matrix[i][nonzero]
@@ -33,5 +38,6 @@ def inverse(matrix):
                 anotherTemp.append(-list1*k + list2)
             inverse[rest] = anotherTemp
     return inverse
+
 
 print(inverse([[2,2,3,3],[2,2,3,3],[3,3,4,5],[3,56,2,2],[45,56,5,2]]))
