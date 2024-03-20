@@ -12,7 +12,7 @@ class matrix:
             inverse.append([0]*rows)
             inverse[row][counting] = 1
             counting += 1
-        if rows < columns:
+        if rows < columns: # i think this might be arbitrary, but i am afraid to break the code, so i wont change ii
             numbersyay = min(rows, columns)
         else:
             numbersyay = max(rows,columns)
