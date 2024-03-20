@@ -122,6 +122,7 @@ class matrix:
                 yay = templist[x]
                 rref_form.insert(num, yay)
                 rref_form.pop(x+1)
+        return rref_form
 
     def __mul__(self, other):
         finalmatrix = []
@@ -152,4 +153,4 @@ class matrix:
 
 
 x = matrix([[3,3,4,5], [2,2,3,3],[2,2,3,3]])
-print(x.inverse()) 
+print(x.rref()) 
