@@ -41,6 +41,37 @@ class matrix:
                 for list1, list2 in zip(inverse[i], inverse[rest]):
                     anotherTemp.append(-list1*k + list2)
                 inverse[rest] = anotherTemp
+        
+        templist = rref_form.copy() 
+        for x in range(min(rows,columns)-1, -1, -1): #zeros down
+            if rref_form[x] == [0]*columns:
+                needtoadd = templist[x]
+                rref_form.pop(x)
+                rref_form.append(needtoadd)
+                yayinverse = inverse.pop(x)
+                inverse.append(yayinverse)
+                
+
+        templist = rref_form.copy()
+        tempinverse = inverse.copy()
+        for x in range(min(columns,rows)-1, -1, -1): #switch the rows to get rref
+            if rref_form[x] == [0]*columns:
+                continue        
+            elif rref_form[x][x] != 1:
+                count = 0
+                for num in range(columns):
+                    pivot = rref_form[x][num]
+                    if pivot != 0:
+                        break
+                    count += 1
+                yay = templist[x]
+                rref_form.insert(num, yay)
+                rref_form.pop(x+1)
+
+                inverseyay = tempinverse[x]
+                inverse.insert(num, inverseyay)
+                inverse.pop(x+1)
+
         return inverse
     
     def rref(self):
@@ -69,7 +100,28 @@ class matrix:
                 for list1, list2 in zip(rref_form[i], rref_form[rest]):
                     temp.append(-list1*k + list2)
                 rref_form[rest] = temp
-        return rref_form
+
+        templist = rref_form.copy()
+        for x in range(min(rows,columns)-1, -1, -1): #zeros down
+            if rref_form[x] == [0]*columns:
+                needtoadd = templist[x]
+                rref_form.pop(x)
+                rref_form.append(needtoadd)
+
+        templist = rref_form.copy()
+        for x in range(min(columns,rows)-1, -1, -1): #switch the rows to get rref
+            if rref_form[x] == [0]*columns:
+                continue        
+            elif rref_form[x][x] != 1:
+                count = 0
+                for num in range(columns):
+                    pivot = rref_form[x][num]
+                    if pivot != 0:
+                        break
+                    count += 1
+                yay = templist[x]
+                rref_form.insert(num, yay)
+                rref_form.pop(x+1)
 
     def __mul__(self, other):
         finalmatrix = []
@@ -99,10 +151,5 @@ class matrix:
 
 
 
-x = matrix([[2,3],[8,9],[1,1]])
-y = matrix([[4,5,7],[2,1,0]])
-print(y*x)
-
-t = matrix([[22,34],[43,22]])
-m = matrix([[34,22],[23,55]])
-print(t+m)
+x = matrix([[3,3,4,5], [2,2,3,3],[2,2,3,3]])
+print(x.inverse()) 
