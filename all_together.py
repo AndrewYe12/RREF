@@ -151,6 +151,6 @@ class matrix:
         return finalmatrix
 
 
-
-x = matrix([[3,3,4,5], [2,2,3,3],[2,2,3,3]])
-print(x.rref()) 
+if __name__ == '__main__':
+    x = matrix([[3,3,4,5], [2,2,3,3],[2,2,3,3]])
+    print(x+x) 
