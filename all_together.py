@@ -1,7 +1,15 @@
+from fractions import Fraction as frac
+
 class matrix: 
     def __init__(self, matrix):
         self.matrix = matrix
-
+    
+    def fraction(self):
+        for x in range(len(self.matrix)):
+            for y in range(len(self.matrix[0])):
+                self.matrix[x][y] = str(frac(str(self.matrix[x][y])).numerator) + '/' + str(frac(str(self.matrix[x][y])).denominator)
+        return self.matrix
+    
     def inverse(self):
         rows = len(self.matrix)
         columns = len(self.matrix[0])
@@ -152,5 +160,5 @@ class matrix:
 
 
 if __name__ == '__main__':
-    x = matrix([[3,3,4,5], [2,2,3,3],[2,2,3,3]])
-    print(x+x) 
+    x = matrix([[3,3,0.8,5], [2,2,3,3],[2,2,3,3]])
+    print(x.fraction()) 
