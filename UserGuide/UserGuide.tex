@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{amsmath,array}
+
+
+\title{User Guide}
+\author{Andrew Ye and James Ross}
+\date{April 2024}
+
+\begin{document}
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+This project was to program a way to row reduce the matrix, find the inverse of a matrix, multiply matrices, and add matrices. 
+
+\section{Accessing the Project}
+Navigate to \href{https://github.com/AndrewYe12/RREF/blob/main/all_together.py}{RREF} repository. Download the file \(all\_together.py\) and \(execute.py\). 
+Create an instance of the matrix class by assigning a variable to \(matrix(\text{your matrix goes here})\) inside the \(execute.py\) file. Now you can apply methods to this instance.
+
+
+\section{Class Methods}
+We created a matrix class in order to implement our goal.
+\begin{center}
+\begin{tabular}{||c|c||}
+    \hline
+    Operation & Function Name \\ [0.5ex]
+    \hline\hline
+    Row Reduced Echelon Form & .rref() \\
+    Inverse Matrix & .inverse() \\
+    Represent each entry as a fraction & .fraction() \\
+    Multiply Matrics & \(*\) \\
+    Add Matrics & \(+\) \\ [1ex]
+    \hline 
+\end{tabular}
+\end{center}
+Note that each method returns an instance of the matrix class, so to access the matrix itself you will have to add \(.matrix\) to the end of the instance. 
+Also, the \(.fraction\) method returns a list of list of strings, so \(.fraction()\) should be the last method applied to whatever operation you are applying to the
+matrix. 
+
+\section{.rref()}
+This  row reduces the matrix to echelon form. 
+
+\section{.inverse()}
+This method returns the matrix \(B\) such that \(rref(A) = BA\) where \(A\) is the input matrix.
+Thus when \(A\) is square and invertible, it will return the inverse of \(A\) where \(I = rref(A) = BA\).  
+
+\section{.fraction()}
+Returns the matrix as another matrix except each entry is a string in fraction form. 
+
+\section{+}
+Matrix addition between two instances of matrix class. 
+
+\section{*}
+Matrix multiplication between two instances of matrix class. 
+
+
+\end{document}

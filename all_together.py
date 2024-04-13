@@ -1,34 +1,33 @@
 from fractions import Fraction as frac
+import copy
 
 class matrix: 
     def __init__(self, matrix):
         self.matrix = matrix
     
     def fraction(self):
-        for x in range(len(self.matrix)):
-            for y in range(len(self.matrix[0])):
-                self.matrix[x][y] = str(frac(str(self.matrix[x][y])).numerator) + '/' + str(frac(str(self.matrix[x][y])).denominator)
-        return self.matrix
-    
+        newmatrix = copy.deepcopy(self.matrix)
+        for x in range(len(newmatrix)):
+            for y in range(len(newmatrix[0])):
+                newmatrix[x][y] = str(frac(str(newmatrix[x][y])).numerator) + '/' + str(frac(str(newmatrix[x][y])).denominator)
+        newmatrix = matrix(newmatrix)
+        return newmatrix
+
     def inverse(self):
         rows = len(self.matrix)
         columns = len(self.matrix[0])
-        rref_form = self.matrix
+        rref_form = copy.deepcopy(self.matrix)
         inverse = []
         counting = 0
         for row in range(rows): # generate identity 
             inverse.append([0]*rows)
             inverse[row][counting] = 1
             counting += 1
-        if rows < columns: # i think this might be arbitrary, but i am afraid to break the code, so i wont change ii
-            numbersyay = min(rows, columns)
-        else:
-            numbersyay = max(rows,columns)
-            
+        numbersyay = rows
         for i in range(numbersyay):
             count = 0
             for nonzero in range(columns):
-                pivot = self.matrix[i][nonzero]
+                pivot = rref_form[i][nonzero]
                 if pivot != 0:
                     break
                 count +=1
@@ -79,21 +78,20 @@ class matrix:
                 inverseyay = tempinverse[x]
                 inverse.insert(num, inverseyay)
                 inverse.pop(x+1)
+        
+        inverse = matrix(inverse)
 
         return inverse
     
     def rref(self):
         rows = len(self.matrix)
         columns = len(self.matrix[0])
-        rref_form = self.matrix
-        if rows < columns:
-            numbersyay = min(rows, columns)
-        else:
-            numbersyay = max(rows,columns)
+        rref_form = copy.deepcopy(self.matrix)
+        numbersyay = rows
         for i in range(numbersyay): 
             count = 0
             for nonzero in range(columns):
-                pivot = self.matrix[i][nonzero]
+                pivot = rref_form[i][nonzero]
                 if pivot != 0:
                     break
                 count +=1
@@ -130,6 +128,9 @@ class matrix:
                 yay = templist[x]
                 rref_form.insert(num, yay)
                 rref_form.pop(x+1)
+
+        rref_form = matrix(rref_form)
+
         return rref_form
 
     def __mul__(self, other):
@@ -147,6 +148,8 @@ class matrix:
                         yay.append(hello)
                     tempy[0] = yay
             finalmatrix.append(tempy)
+        
+        finalmatrix = matrix(finalmatrix)
         return finalmatrix
 
     def __add__(self, other):
@@ -156,9 +159,13 @@ class matrix:
             for listy1, listy2 in zip(list1, list2):
                 temp.append(listy1 + listy2)
             finalmatrix.append(temp)
+        
+        finalmatrix = matrix(finalmatrix)
+
         return finalmatrix
 
 
 if __name__ == '__main__':
-    x = matrix([[3,3,0.8,5], [2,2,3,3],[2,2,3,3]])
-    print(x.fraction()) 
+    x = matrix([[0,0,1,0,0,0,0],[1,0,0,0,0,0,0]])
+    print(x.rref().matrix) 
+ 
