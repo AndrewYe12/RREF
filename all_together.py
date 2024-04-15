@@ -48,7 +48,52 @@ class matrix:
                 for list1, list2 in zip(inverse[i], inverse[rest]):
                     anotherTemp.append(-list1*k + list2)
                 inverse[rest] = anotherTemp
+
+
+        countThis = 0
+        for x in range(rows):
+            if rref_form[x] == [0]*columns:
+                countThis +=1
+
+        limit  = min(rows, columns)
+        x=0
+        z=0
+        while z<countThis: #zeros down
+            if rref_form[x] == [0]*columns:
+                newTemp = inverse[x]
+                for y in range(x,rows-1):
+                    rref_form[y] = rref_form[y+1]
+                    inverse[y] = inverse[y+1]
+                rref_form[rows-1] = [0]*columns
+                inverse[rows-1] = newTemp
+                z +=1
+                x-=1
+            x+=1
+
+        sortThisArray = [0]*limit
+        for x in range(limit-1, -1,-1):
+            for y in range(columns):
+                pivot = rref_form[x][y]
+                if pivot != 0:
+                    break
+            sortThisArray[x] = y
         
+        constantArray = copy.deepcopy(sortThisArray)
+        sortThisArray.sort()
+        newInverse = [[0]*rows for i in range(rows)]
+        for x in range(len(sortThisArray)):
+            temp = constantArray[x]
+            for index in range(len(sortThisArray)):
+                if sortThisArray[index] == temp:
+                    break
+            newInverse[index] = inverse[x]
+
+        for x in range(rows):
+            if newInverse[x] == [0]*rows:
+                newInverse[x] = inverse[x]
+
+
+        '''
         templist = rref_form.copy() 
         for x in range(min(rows,columns)-1, -1, -1): #zeros down
             if rref_form[x] == [0]*columns:
@@ -78,10 +123,11 @@ class matrix:
                 inverseyay = tempinverse[x]
                 inverse.insert(num, inverseyay)
                 inverse.pop(x+1)
-        
-        inverse = matrix(inverse)
+        '''
+        newInverse = matrix(newInverse)
 
-        return inverse
+
+        return newInverse
     
     def rref(self):
         rows = len(self.matrix)
@@ -107,31 +153,45 @@ class matrix:
                     temp.append(-list1*k + list2)
                 rref_form[rest] = temp
 
-        templist = rref_form.copy()
-        for x in range(min(rows,columns)-1, -1, -1): #zeros down
+        countThis = 0
+        for x in range(rows):
             if rref_form[x] == [0]*columns:
-                needtoadd = templist[x]
-                rref_form.pop(x)
-                rref_form.append(needtoadd)
+                countThis +=1
 
-        templist = rref_form.copy()
-        for x in range(min(columns,rows)-1, -1, -1): #switch the rows to get rref
+        limit = min(rows, columns)
+        x=0
+        z=0
+        while z<countThis: #zeros down
             if rref_form[x] == [0]*columns:
-                continue        
-            elif rref_form[x][x] != 1:
-                count = 0
-                for num in range(columns):
-                    pivot = rref_form[x][num]
-                    if pivot != 0:
-                        break
-                    count += 1
-                yay = templist[x]
-                rref_form.insert(num, yay)
-                rref_form.pop(x+1)
+                for y in range(x,rows-1):
+                    rref_form[y] = rref_form[y+1]
+                rref_form[rows-1] = [0]*columns
+                z +=1
+                x-=1
+            x+=1
 
-        rref_form = matrix(rref_form)
+        sortThisArray = [0]*limit
+        for x in range(limit-1, -1,-1):
+            for y in range(columns):
+                pivot = rref_form[x][y]
+                if pivot != 0:
+                    break
+            sortThisArray[x] = y
+        
+        newMatrix= [ [0]*columns for i in range(rows)]
+        constantArray = copy.deepcopy(sortThisArray)
+        sortThisArray.sort()
+        for x in range(len(sortThisArray)):
+            temp = constantArray[x]
+            for index in range(len(sortThisArray)):
+                if sortThisArray[index] == temp:
+                    break
+            newMatrix[index] = rref_form[x]
 
-        return rref_form
+        newMatrix = matrix(newMatrix)
+
+        return newMatrix
+
 
     def __mul__(self, other):
         finalmatrix = []
@@ -167,5 +227,7 @@ class matrix:
 
 if __name__ == '__main__':
     x = matrix([[0,0,0,3,78,8,0],[2,41,3,98,9,89,9],[6,78,4,2,6,76,7],[32,4,8,6,7,5,9],[6,4,8,3,67,8,878]])
-    print(x.rref().matrix) 
+    #print(x.rref().matrix) 
+    y = matrix([[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,1],[1,0,0],[0,0,0],[0,1,0],[0,0,0]])
+    print(x.inverse().matrix)
  

@@ -70,18 +70,28 @@ class Matrix{
                 rref_form[k] = temp;
             }
         }
-
-          
+        
         double[] example = new double[columns];
-        for (int i = 0; i<Math.min(rows,columns); i++){ //change this to go in reverse order if there is a bug, but i think it works for now.
-            if (Arrays.equals(rref_form[i], example)){
-                for (int k = i; k<rows-1; k++){
-                    rref_form[k] = rref_form[k+1];
-                }
-                rref_form[rows-1] = example;
+        int numberOfZeros = 0;
+        for (int i = 0; i<rows; i++){
+            if (Arrays.equals(rref_form[i],example)){
+                numberOfZeros +=1;
             }
         }
-        
+        int access = 0;
+        int zeroCount = 0;
+        while (zeroCount < numberOfZeros){
+            if (Arrays.equals(rref_form[access], example)){
+                for (int k = access; k<rows-1; k++){
+                    rref_form[k] = rref_form[k+1];
+                }
+                rref_form[rows - 1] = example;
+                zeroCount += 1;
+                access -=1;
+            }
+            access +=1;
+        }
+
         int minOfMatrix = Math.min(rows, columns);
         int[] sortThisArray = new int[minOfMatrix];
         for (int i = minOfMatrix-1; i > -1; i--){
@@ -109,7 +119,7 @@ class Matrix{
             }
             newMatrix[index] = rref_form[i];
         }
-
+        
         return newMatrix;
     }    
 
@@ -164,20 +174,30 @@ class Matrix{
             }
         }
 
-          
         double[] example = new double[columns];
-        for (int i = Math.min(rows, columns)-1; i>-1; i--){
-            if (Arrays.equals(rref_form[i], example)){
-                double[] newTemp = inverse[i];
-                for (int k = i; k<rows-1; k++){
+        int numberOfZeros = 0;
+        for (int i = 0; i<rows; i++){
+            if (Arrays.equals(rref_form[i],example)){
+                numberOfZeros +=1;
+            }
+        }
+        int access = 0;
+        int zeroCount = 0;
+        while (zeroCount < numberOfZeros){
+            if (Arrays.equals(rref_form[access], example)){
+                double[] newTemp = inverse[access];
+                for (int k = access; k<rows-1; k++){
                     rref_form[k] = rref_form[k+1];
                     inverse[k] = inverse[k+1];
                 }
                 rref_form[rows-1] = example;
                 inverse[rows-1] = newTemp;
+                zeroCount += 1;
+                access -=1;
             }
+            access +=1;
         }
-        
+
         int minOfMatrix = Math.min(rows, columns);
         int[] sortThisArray = new int[minOfMatrix];
         int countZeroRows = 0;
@@ -198,20 +218,9 @@ class Matrix{
 
             sortThisArray[i] = k;
         }
-        
-        double[][] newMatrix = new double[rows][columns];
+
         int[] constantArray = Arrays.copyOf(sortThisArray, sortThisArray.length);
         Arrays.sort(sortThisArray);
-        for (int i = 0; i <sortThisArray.length; i++){
-            int temp = constantArray[i];
-            int index;
-            for (index = 0; index<sortThisArray.length; index++){
-                if (sortThisArray[index] == temp){
-                    break;
-                }
-            }
-            newMatrix[index] = rref_form[i];
-        }
 
         double[][] newInverse = new double[rows][rows];
         for (int i = 0; i<sortThisArray.length ; i++){
@@ -231,8 +240,6 @@ class Matrix{
             }
         }
 
-
-
         return newInverse;
     }
 
@@ -240,7 +247,10 @@ class Matrix{
         double[][] yay = {{0,0,0,3,78,8,0},{2,41,3,98,9,89,9},{6,78,4,2,6,76,7},{32,4,8,6,7,5,9},{6,4,8,3,67,8,878}};
         Matrix p = new Matrix(yay);
         System.out.println(Arrays.deepToString(p.rref()));
-        System.out.print(Arrays.deepToString(p.inverse()));
+        //System.out.println(Arrays.deepToString(p.inverse()));
+        double [][] othermatrix = {{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,1},{1,0,0},{0,0,0},{0,1,0},{0,0,0}};
+        Matrix y = new Matrix(othermatrix);
+        //System.out.print(Arrays.deepToString(y.rref()));
     }
 }
 
