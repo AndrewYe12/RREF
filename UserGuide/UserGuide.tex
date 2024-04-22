@@ -22,7 +22,7 @@ This project was to program a way to row reduce the matrix, find the inverse of 
 
 \section{Accessing the Project}
 Navigate to \href{https://github.com/AndrewYe12/RREF/blob/main/all_together.py}{RREF} repository. Download the file \(all\_together.py\) and \(execute.py\). 
-Create an instance of the matrix class by assigning a variable to \(matrix(\text{your matrix goes here})\) inside the \(execute.py\) file. Now you can apply methods to this instance.
+Create an instance of the matrix class by assigning a matrix to \(matrix(\text{your matrix goes here})\) inside the \(execute.py\) file. Now you can apply methods to this instance.
 
 
 \section{Class Methods}
@@ -45,20 +45,20 @@ Also, the \(.fraction\) method returns a list of list of strings, so \(.fraction
 matrix. 
 
 \section{.rref()}
-This  row reduces the matrix to echelon form. 
+This row reduces the matrix to echelon form. This method is a bijection between \(\mathbb{R}^{m \times n}\) and \(\mathbb{R}^{m \times n}\)
 
 \section{.inverse()}
 This method returns the matrix \(B\) such that \(rref(A) = BA\) where \(A\) is the input matrix.
-Thus when \(A\) is square and invertible, it will return the inverse of \(A\) where \(I = rref(A) = BA\).  
+Thus when \(A\) is square and invertible, it will return the inverse of \(A\) where \(I = rref(A) = BA\). This method is a bijection between \(\mathbb{R}^{m \times n}\) and \(\mathbb{R}^{m \times m}\)
 
 \section{.fraction()}
 Returns the matrix as another matrix except each entry is a string in fraction form. 
 
 \section{+}
-Matrix addition between two instances of matrix class. 
+Matrix addition between two instances of matrix class. \(f:\mathbb{R}^{m\times n} \times \mathbb{R}^{m \times n} \rightarrow \mathbb{R}^{m \times n}\).
 
 \section{*}
-Matrix multiplication between two instances of matrix class. 
+Matrix multiplication between two instances of matrix class. \(f:\mathbb{R}^{m\times n} \times \mathbb{R}^{n \times p} \rightarrow \mathbb{R}^{m \times p}\).
 
 
 \end{document}

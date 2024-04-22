@@ -2,10 +2,10 @@ from fractions import Fraction as frac
 import copy
 
 class matrix: 
-    def __init__(self, matrix):
+    def __init__(self, matrix): #constructor
         self.matrix = matrix
     
-    def fraction(self):
+    def fraction(self): #Instance method to turn the matrix into one where each entry is a fraction. Returns a 2-d list of strings. 
         newmatrix = copy.deepcopy(self.matrix)
         for x in range(len(newmatrix)):
             for y in range(len(newmatrix[0])):
@@ -13,7 +13,7 @@ class matrix:
         newmatrix = matrix(newmatrix)
         return newmatrix
 
-    def inverse(self):
+    def inverse(self): #Instance method to find the inverse of a particular matrix. Returns an inverse matrix of the matrix class. 
         rows = len(self.matrix)
         columns = len(self.matrix[0])
         rref_form = copy.deepcopy(self.matrix)
@@ -26,16 +26,16 @@ class matrix:
         numbersyay = rows
         for i in range(numbersyay):
             count = 0
-            for nonzero in range(columns):
+            for nonzero in range(columns): #find pivot  
                 pivot = rref_form[i][nonzero]
                 if pivot != 0:
                     break
                 count +=1
             if count == columns:
                 continue
-            rref_form[i] = [x/pivot for x in rref_form[i]]
-            inverse[i] = [x/pivot for x in inverse[i]] #inverse
-            for rest in range(rows):
+            rref_form[i] = [x/pivot for x in rref_form[i]] #divide pivot row by the pivot so the 1st entry is 1
+            inverse[i] = [x/pivot for x in inverse[i]] #Do same on inverse
+            for rest in range(rows): #Subtract from the rest of the rows in such a way that the only value in the pivot column is the 1 in the pivot row. 
                 if rest ==i:
                     continue 
                 k = rref_form[rest][count]
@@ -44,13 +44,13 @@ class matrix:
                     temp.append(-list1*k + list2)
                 rref_form[rest] = temp
 
-                anotherTemp = [] #inverse
+                anotherTemp = [] #Do same on inverse
                 for list1, list2 in zip(inverse[i], inverse[rest]):
                     anotherTemp.append(-list1*k + list2)
                 inverse[rest] = anotherTemp
 
 
-        countThis = 0
+        countThis = 0 #Counts the number of zero rows
         for x in range(rows):
             if rref_form[x] == [0]*columns:
                 countThis +=1
@@ -58,7 +58,7 @@ class matrix:
         limit  = min(rows, columns)
         x=0
         z=0
-        while z<countThis: #zeros down
+        while z<countThis: #Pulls the zeros down to the bottom. Do on both inverse and rref
             if rref_form[x] == [0]*columns:
                 newTemp = inverse[x]
                 for y in range(x,rows-1):
@@ -70,7 +70,7 @@ class matrix:
                 x-=1
             x+=1
 
-        sortThisArray = [0]*limit
+        sortThisArray = [0]*limit #creates a list where the ith entry of the list is the column index of the pivot in row i. 
         for x in range(limit-1, -1,-1):
             for y in range(columns):
                 pivot = rref_form[x][y]
@@ -78,10 +78,10 @@ class matrix:
                     break
             sortThisArray[x] = y
         
-        constantArray = copy.deepcopy(sortThisArray)
+        constantArray = copy.deepcopy(sortThisArray) #create deep copy
         sortThisArray.sort()
-        newInverse = [[0]*rows for i in range(rows)]
-        for x in range(len(sortThisArray)):
+        newInverse = [[0]*rows for i in range(rows)] 
+        for x in range(len(sortThisArray)): #compare the old and new lists so that you can figure out where the rows need to go. 
             temp = constantArray[x]
             for index in range(len(sortThisArray)):
                 if sortThisArray[index] == temp:
@@ -92,44 +92,12 @@ class matrix:
             if newInverse[x] == [0]*rows:
                 newInverse[x] = inverse[x]
 
-
-        '''
-        templist = rref_form.copy() 
-        for x in range(min(rows,columns)-1, -1, -1): #zeros down
-            if rref_form[x] == [0]*columns:
-                needtoadd = templist[x]
-                rref_form.pop(x)
-                rref_form.append(needtoadd)
-                yayinverse = inverse.pop(x)
-                inverse.append(yayinverse)
-                
-
-        templist = rref_form.copy()
-        tempinverse = inverse.copy()
-        for x in range(min(columns,rows)-1, -1, -1): #switch the rows to get rref
-            if rref_form[x] == [0]*columns:
-                continue        
-            elif rref_form[x][x] != 1:
-                count = 0
-                for num in range(columns):
-                    pivot = rref_form[x][num]
-                    if pivot != 0:
-                        break
-                    count += 1
-                yay = templist[x]
-                rref_form.insert(num, yay)
-                rref_form.pop(x+1)
-
-                inverseyay = tempinverse[x]
-                inverse.insert(num, inverseyay)
-                inverse.pop(x+1)
-        '''
         newInverse = matrix(newInverse)
 
 
         return newInverse
     
-    def rref(self):
+    def rref(self): #everything done in the rref method is done in the inverse method. Returns an element of the matrix class 
         rows = len(self.matrix)
         columns = len(self.matrix[0])
         rref_form = copy.deepcopy(self.matrix)
@@ -193,7 +161,7 @@ class matrix:
         return newMatrix
 
 
-    def __mul__(self, other):
+    def __mul__(self, other): #Overrides the * operator such that it multiplies two matrices together. Returns an element of the matrix class
         finalmatrix = []
         for i in range(len(self.matrix)):
             tempy = []
@@ -212,7 +180,7 @@ class matrix:
         finalmatrix = matrix(finalmatrix)
         return finalmatrix
 
-    def __add__(self, other):
+    def __add__(self, other): #Overrides the + operator such that it adds two matrices together. Returns an element of the matrix class. 
         finalmatrix = []
         for list1, list2 in zip(self.matrix, other.matrix):
             temp = []
@@ -229,5 +197,5 @@ if __name__ == '__main__':
     x = matrix([[0,0,0,3,78,8,0],[2,41,3,98,9,89,9],[6,78,4,2,6,76,7],[32,4,8,6,7,5,9],[6,4,8,3,67,8,878]])
     #print(x.rref().matrix) 
     y = matrix([[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,1],[1,0,0],[0,0,0],[0,1,0],[0,0,0]])
-    print(x.inverse().matrix)
+    print(x.rref().matrix)
  
