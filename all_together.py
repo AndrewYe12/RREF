@@ -58,7 +58,7 @@ class matrix:
         limit  = min(rows, columns)
         x=0
         z=0
-        while z<countThis: #Pulls the zeros down to the bottom. Do on both inverse and rref
+        while z<countThis: #Pulls the zeros down to the bottom. Do on both inverse and rref matrices. 
             if rref_form[x] == [0]*columns:
                 newTemp = inverse[x]
                 for y in range(x,rows-1):
@@ -175,7 +175,7 @@ class matrix:
                         hello = list1 + list2
                         yay.append(hello)
                     tempy[0] = yay
-            finalmatrix.append(tempy)
+            finalmatrix.append(tempy[0])
         
         finalmatrix = matrix(finalmatrix)
         return finalmatrix
@@ -192,10 +192,38 @@ class matrix:
 
         return finalmatrix
 
+    def det(self): #determinant for square matrices only
+        determinant = 0
+        rows = len(self.matrix)
+        sign = 1
+        count = 0
+        if len(self.matrix) == 1:
+            return self.matrix[0][0]
+        else:
+            for yay in range(len(self.matrix)):
+                newDet = [[0]*(rows-1) for x in range(rows-1)]
+                for x in range(1,rows):
+                    for y in range(rows):
+                        if x != 0 and y != yay:
+                            if y< yay:
+                                newDet[x-1][y] = self.matrix[x][y]
+                            else:
+                                newDet[x-1][y-1] = self.matrix[x][y]
+                newDet = matrix(newDet)
+                determinant += sign * (self.matrix[0][count]*newDet.det())
+                sign = -1*sign
+                count +=1
+        return determinant
+
+        
+     
+            
+
 
 if __name__ == '__main__':
     x = matrix([[0,0,0,3,78,8,0],[2,41,3,98,9,89,9],[6,78,4,2,6,76,7],[32,4,8,6,7,5,9],[6,4,8,3,67,8,878]])
     #print(x.rref().matrix) 
     y = matrix([[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,1],[1,0,0],[0,0,0],[0,1,0],[0,0,0]])
-    print(x.rref().matrix)
+    p = matrix([[1,0,1,3],[2,31,32,5],[443,4,2,2],[2,5,3,1]])
+    print(p.det())
  
