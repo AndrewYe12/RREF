@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Accessing the Calculator}{4}{0}{1}
+\beamer@sectionintoc {2}{Using the Calculator}{6}{0}{2}
+\beamer@sectionintoc {3}{Matrix Operations as Methods}{8}{0}{3}
+\beamer@sectionintoc {4}{Reflection}{16}{0}{4}
