@@ -67,7 +67,7 @@ x = matrix([[1,2],[2,1]])
 
 \section{Matrix Operations as Methods}
 \begin{frame}{Our Methods}
-We wanted to program an algorithm to row reduce a matrix, find the inverse of a matrix, and add/multiply two matrices.
+We wanted to program an algorithm to row reduce a matrix, find the inverse of a matrix, add/multiply two matrices, and find the determinant of a matrix.
 \end{frame}
 \begin{frame}{Intro to Matrix Operation Methods}
     \begin{center}
@@ -80,6 +80,8 @@ We wanted to program an algorithm to row reduce a matrix, find the inverse of a 
         $*$ : Multiplies two matrices together
 
         $.fraction()$: Returns the matrix as a string of fractions
+
+        \(.det()\): Calculates the determinant of a matrix. 
     \end{center}
 \end{frame}
 
@@ -218,6 +220,23 @@ from all_together import matrix
 
 \end{frame}
 
+\begin{frame}[fragile = singleslide]{Determinant}
+    Inputs a matrix and returns the determinant. 
+\begin{verbatim}
+from all_together import matrix    
+    x = [[1,0,0],[0,1,0],[0,0,1]]
+    print(x.det()) 
+\end{verbatim}
+\begin{equation*}
+    det \left[
+    \begin{array}{ccc}
+        1 & 0 &0 \\
+        0 &1&0 \\
+        0&0&1 
+    \end{array}
+    \right] = 1
+\end{equation*}
+\end{frame}
 
 
 \section{Reflection}
@@ -254,7 +273,9 @@ from all_together import matrix
 \begin{center}
     Are there any questions?
 \end{center}
-    
+
 \end{frame}
+
+
 
 \end{document}

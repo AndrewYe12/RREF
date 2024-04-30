@@ -67,7 +67,8 @@ To meet our goal, we created a matrix class to house our matrix operation method
     Inverse Matrix & .inverse() \\
     Represent each entry as a fraction & .fraction() \\
     Multiply Matrics & \(*\) \\
-    Add Matrics & \(+\) \\ [1ex]
+    Add Matrics & \(+\) \\ 
+    Determinant & .det() \\[1ex] 
     \hline 
 \end{tabular}
 \end{center}
@@ -190,5 +191,21 @@ This multiplies two matrices.
     \right]
 \end{equation}
 
+\section{Determinant}
+Determinant of a matrix. Defined only on squared matrices. \(f: \mathbb{R}^{m\times m} \rightarrow \mathbb{R}\)
+\begin{lstlisting}
+from all_together import matrix
+x = [[1,0,0],[0,1,0],[0,0,1]]
+print(x.det()) 
+\end{lstlisting}
+\begin{equation}
+    det \left[
+    \begin{array}{ccc}
+        1 & 0 &0 \\
+        0 &1&0 \\
+        0&0&1 
+    \end{array}
+    \right] = 1
+\end{equation}
 
 \end{document}
