@@ -166,8 +166,8 @@ class matrix:
         for i in range(len(self.matrix)):
             tempy = []
             for x in range(len(self.matrix[0])):
-                temp = [self.matrix[i][x]*other.matrix[x][y] for y in range(len(other.matrix[0]))]
-                if not tempy:
+                temp = [self.matrix[i][x]*other.matrix[x][y] for y in range(len(other.matrix[0]))]  #multiplies each row with the corresponding element in first matrix
+                if not tempy: #if else statment helps to insert the correct list into final matrix 
                     tempy.append(temp)
                 else:
                     yay = []
@@ -182,7 +182,7 @@ class matrix:
 
     def __add__(self, other): #Overrides the + operator such that it adds two matrices together. Returns an element of the matrix class. 
         finalmatrix = []
-        for list1, list2 in zip(self.matrix, other.matrix):
+        for list1, list2 in zip(self.matrix, other.matrix): #loops though both matrices and adds them together
             temp = []
             for listy1, listy2 in zip(list1, list2):
                 temp.append(listy1 + listy2)
@@ -192,17 +192,17 @@ class matrix:
 
         return finalmatrix
 
-    def det(self): #determinant for square matrices only
+    def det(self): #determinant for square matrices only. Return an float. 
         determinant = 0
         rows = len(self.matrix)
         sign = 1
         count = 0
-        if len(self.matrix) == 1:
+        if len(self.matrix) == 1: #end point for recursion
             return self.matrix[0][0]
         else:
             for yay in range(len(self.matrix)):
-                newDet = [[0]*(rows-1) for x in range(rows-1)]
-                for x in range(1,rows):
+                newDet = [[0]*(rows-1) for x in range(rows-1)] #create new smaller matrix for recursion 
+                for x in range(1,rows): #inserts correct values into smaller matrix
                     for y in range(rows):
                         if x != 0 and y != yay:
                             if y< yay:
@@ -210,7 +210,7 @@ class matrix:
                             else:
                                 newDet[x-1][y-1] = self.matrix[x][y]
                 newDet = matrix(newDet)
-                determinant += sign * (self.matrix[0][count]*newDet.det())
+                determinant += sign * (self.matrix[0][count]*newDet.det()) #recursively adds to the determinant until it is correct 
                 sign = -1*sign
                 count +=1
         return determinant
