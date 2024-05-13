@@ -77,7 +77,7 @@ Also, the \(.fraction()\) method returns a list of list of strings, so \(.fracti
 matrix. 
 
 \section{.rref()}
-This row reduces the matrix to echelon form. This method is a bijection between \(\mathbb{R}^{m \times n}\) and \(\mathbb{R}^{m \times n}\)
+This row reduces the matrix to echelon form. 
 \begin{lstlisting}
 from all_together import matrix
 x = matrix([[-3,3,4,5], [2,2,3,3],[2,2,3,22]])
@@ -104,7 +104,7 @@ This code row reduces this matrix
 
 \section{.inverse()}
 This method returns the matrix \(B\) such that \(rref(A) = BA\) where \(A\) is the input matrix.
-Thus when \(A\) is square and invertible, it will return the inverse of \(A\) where \(I = rref(A) = BA\). This method is a bijection between \(\mathbb{R}^{m \times n}\) and \(\mathbb{R}^{m \times m}\)
+Thus when \(A\) is square and invertible, it will return the inverse of \(A\) where \(I = rref(A) = BA\). 
 \begin{lstlisting}
 from all_together import matrix
 x = matrix([[-3,3,4,5], [2,2,3,3],[2,2,3,22]])
